@@ -42,17 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Level.cs" />
-    <Compile Include="Obstacle.cs" />
-    <Compile Include="Point.cs" />
-    <Compile Include="Gameloop.cs" />
-    <Compile Include="GameRule.cs" />
-    <Compile Include="GameSettings.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="GameObjects\Coin.cs" />
+    <Compile Include="GameObjects\Enemy.cs" />
+    <Compile Include="GameObjects\LevelExit.cs" />
+    <Compile Include="GameObjects\TextTip.cs" />
+    <Compile Include="Game\Application.cs" />
+    <Compile Include="Level\ILevel.cs" />
+    <Compile Include="Level\Level0.cs" />
+    <Compile Include="Util\GuiUpdater.cs" />
+    <Compile Include="GameObjects\IGameObject.cs" />
+    <Compile Include="Level\Level100.cs" />
+    <Compile Include="GameObjects\Obstacle.cs" />
+    <Compile Include="Util\Point.cs" />
+    <Compile Include="Game\GameLoop.cs" />
+    <Compile Include="Game\GameRule.cs" />
+    <Compile Include="Game\GameSettings.cs" />
+    <Compile Include="Game\GameState.cs" />
+    <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="Game\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wall.cs" />
+    <Compile Include="GameObjects\Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game
+namespace Game.GameObjects
 {
-    class Program
+    class LevelExit
     {
-        static void Main(string[] args)
-        {
-            Gameloop.Start();
-        }
     }
 }

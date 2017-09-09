@@ -8,13 +8,13 @@ namespace Game
 {
     class Point
     {
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Point(int posX, int posY)
         {
-            PosX = posX;
-            PosY = posY;
+            X = posX;
+            Y = posY;
         }
     }
 }
