@@ -8,21 +8,45 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Level100 : ILevel
+    class Level99 : ILevel
     {
         private int number;
         private List<Wall> walls;
         private List<Enemy> enemies;
         private List<Coin> coins;
         private List<TextTip> tips;
+        private Finish finish;
+        private Point playerSpawn;
 
-        public Level100()
+        public Level99()
         {
-            number = 100;
+            number = 99;
             walls = new List<Wall>();
             enemies = new List<Enemy>();
             coins = new List<Coin>();
             tips = new List<TextTip>();
+            finish = new Finish(new Point(5, 5));
+            playerSpawn = new Point(5, 26);
+        }
+
+        public void ShowSplash()
+        {
+            Console.ForegroundColor = GameSettings.SplashColors[new Random().Next() % GameSettings.SplashColors.Length];
+            Console.Clear();
+            Console.SetCursorPosition(27, 10);
+            Console.Write(" ___      _______  __   __  _______  ___        _______  _______");
+            Console.SetCursorPosition(27, 11);
+            Console.Write("|   |    |       ||  | |  ||       ||   |      |  _    ||  _    |");
+            Console.SetCursorPosition(27, 12);
+            Console.Write("|   |    |    ___||  |_|  ||    ___||   |      | | |   || | |   |");
+            Console.SetCursorPosition(27, 13);
+            Console.Write("|   |    |   |___ |       ||   |___ |   |      | |_|   || |_|   |");
+            Console.SetCursorPosition(27, 14);
+            Console.Write("|   |___ |    ___||       ||    ___||   |___   |___    ||___    |");
+            Console.SetCursorPosition(27, 15);
+            Console.Write("|       ||   |___  |     | |   |___ |       |      |   |    |   |");
+            Console.SetCursorPosition(27, 16);
+            Console.Write("|_______||_______|  |___|  |_______||_______|      |___|    |___|");
         }
 
         public int GetNumber() { return number; }
@@ -36,8 +60,9 @@ namespace Game
             SpawnEnemies();
             SpawnCoins();
             SpawnTips();
+            SpawnFinish();
 
-            return new Point(5, 26);
+            return playerSpawn;
         }
 
         public Point Restart()
@@ -56,7 +81,8 @@ namespace Game
             RemoveWalls();
             RemoveEnemies();
             RemoveCoins();
-            SpawnTips();
+            RemoveTips();
+            RemoveFinish();
         }
 
         public void SpawnWalls()
@@ -68,6 +94,7 @@ namespace Game
 
             walls.Add(new Wall(new Point(107, 1), new Point(107, 4)));
             walls.Add(new Wall(new Point(107, 4), new Point(120, 4)));
+            walls.Add(new Wall(new Point(0, 2), new Point(107, 2)));        // Top strip
 
             walls.Add(new Wall(new Point(0, 23), new Point(11, 23)));
             walls.Add(new Wall(new Point(11, 23), new Point(11, 27)));
@@ -154,6 +181,11 @@ namespace Game
             foreach (TextTip t in tips)
                 t.Paint();
         }
+        
+        public void SpawnFinish()
+        {
+            finish.Paint();
+        }
 
         public void RemoveWalls()
         {
@@ -183,6 +215,11 @@ namespace Game
             tips.Clear();
         }
 
+        public void RemoveFinish()
+        {
+            finish.Remove();
+        }
+
         public void MoveEnemies(long time)
         {
             foreach (Enemy e in enemies)
@@ -206,7 +243,18 @@ namespace Game
         public bool CheckCoinCollision(Point p)
         {
             foreach (Coin c in coins)
-                if (c.IsOccupying(p)) return true;
+                if (c.IsOccupying(p))
+                {
+                    coins.Remove(c);
+                    return true;
+                }
+
+            return false;
+        }
+
+        public bool CheckFinishCollision(Point p)
+        {
+            if (finish.IsOccupying(p)) return true;
             return false;
         }
     }

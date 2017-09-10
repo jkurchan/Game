@@ -25,7 +25,7 @@ namespace Game
         {
             Time = 0;
             Points = 0;
-            Lives = 3;
+            Lives = 2;
             CurrentLevel = -1;
 
             player = new Player(new Point(0, 0));
@@ -66,8 +66,13 @@ namespace Game
         private void setupGame()
         {
             ILevel level = levels[++CurrentLevel];
+
+            level.ShowSplash();
+            Thread.Sleep(2000);
+
             player.MoveToPosition(level.Create(), level);
             player.Paint();
+            Lives++;
 
             GuiUpdater.SetLevel(level.GetNumber());
             GuiUpdater.SetPoints(Points);
@@ -103,10 +108,30 @@ namespace Game
                             Application.State = GameState.Exit;
                             return;
                         case ConsoleKey.F1:
-                            if ((GameSettings.TipsOn == !GameSettings.TipsOn))
+                            if (GameSettings.TipsOn = !GameSettings.TipsOn)
                                 level.SpawnTips();
                             else
                                 level.RemoveTips();
+                            GuiUpdater.ShowTopStrip();
+                            break;
+                        case ConsoleKey.F2:
+                            if (GameSettings.MusicOn = !GameSettings.MusicOn)
+                                MusicPlayer.GetInstance().Resume();
+                            else
+                                MusicPlayer.GetInstance().Pause();
+                            GuiUpdater.ShowTopStrip();
+                            break;
+                        case ConsoleKey.F3:
+                            GameSettings.PolishOn = !GameSettings.PolishOn;
+                            if (GameSettings.TipsOn)
+                            {
+                                level.RemoveTips();
+                                level.SpawnTips();
+                            }
+                            GuiUpdater.SetLevel(level.GetNumber());
+                            GuiUpdater.SetPoints(Points);
+                            GuiUpdater.SetLives(Lives);
+                            GuiUpdater.ShowTopStrip();
                             break;
                         default:
                             break;
@@ -114,11 +139,16 @@ namespace Game
                 }
 
                 level.MoveEnemies(Time);
-                level.CheckCoinCollision(player.Pos);
+
+                if(level.CheckCoinCollision(player.Pos))
+                {
+                    Points++;
+                    GuiUpdater.SetPoints(Points);
+                }
+
                 if (level.CheckEnemyCollision(player.Pos))
                 {
                     Lives--;
-                    Points = 0;
                     Time = 0;
 
                     if (Lives < 1)
@@ -128,11 +158,16 @@ namespace Game
                     }
 
                     GuiUpdater.SetLevel(level.GetNumber());
-                    GuiUpdater.SetPoints(Points);
                     GuiUpdater.SetLives(Lives);
 
                     player.MoveToPosition(level.Restart(), level);
                     continue;
+                }
+
+                if(level.CheckFinishCollision(player.Pos))
+                {
+                    Application.State = GameState.NextLevel;
+                    break;
                 }
 
                 Time++;
@@ -143,6 +178,8 @@ namespace Game
         private void loadLevels()
         {
             levels.Add(new Level0());
+            levels.Add(new Level1());
+            levels.Add(new Level99());
         }
     }
 }

@@ -44,14 +44,17 @@
   <ItemGroup>
     <Compile Include="GameObjects\Coin.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
+    <Compile Include="GameObjects\Finish.cs" />
     <Compile Include="GameObjects\LevelExit.cs" />
     <Compile Include="GameObjects\TextTip.cs" />
     <Compile Include="Game\Application.cs" />
+    <Compile Include="Game\MusicPlayer.cs" />
     <Compile Include="Level\ILevel.cs" />
     <Compile Include="Level\Level0.cs" />
+    <Compile Include="Level\Level1.cs" />
     <Compile Include="Util\GuiUpdater.cs" />
     <Compile Include="GameObjects\IGameObject.cs" />
-    <Compile Include="Level\Level100.cs" />
+    <Compile Include="Level\Level99.cs" />
     <Compile Include="GameObjects\Obstacle.cs" />
     <Compile Include="Util\Point.cs" />
     <Compile Include="Game\GameLoop.cs" />

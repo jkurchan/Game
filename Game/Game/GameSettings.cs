@@ -8,12 +8,17 @@ namespace Game
 {
     static class GameSettings
     {
+        public static string Title = "Mrowka the Game";
+
         public static bool TipsOn = true;
+        public static bool MusicOn = true;
+        public static bool PolishOn = false;
 
         public static char PlayerAvatar = 'm';
         public static char EnemyAvatar = '*';
         public static char ObstacleAvatar = '#';
-        public static char CoinAvatar = 'O';
+        public static char CoinAvatar = '$';
+        public static char FinishAvatar = '>';
 
         public static ConsoleColor CompanyNameColor = ConsoleColor.Magenta;
         public static ConsoleColor[] SplashColors = {
@@ -28,6 +33,8 @@ namespace Game
         public static ConsoleColor EnemyColor = ConsoleColor.Red;
         public static ConsoleColor ObstacleColor = ConsoleColor.White;
         public static ConsoleColor CoinColor = ConsoleColor.Yellow;
+        public static ConsoleColor FinishColor = ConsoleColor.Magenta;
+        public static ConsoleColor TipsColor = ConsoleColor.Cyan;
 
         public static ConsoleColor CompanyNameBackground = ConsoleColor.White;
         public static ConsoleColor Background = ConsoleColor.Black;

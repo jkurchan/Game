@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Game.Level
 {
-    class Level0 : ILevel
+    class Level1 : ILevel
     {
         private int number;
         private List<Wall> walls;
@@ -17,34 +17,34 @@ namespace Game.Level
         private Finish finish;
         private Point playerSpawn;
 
-        public Level0()
+        public Level1()
         {
-            number = 0;
+            number = 1;
             walls = new List<Wall>();
             enemies = new List<Enemy>();
             coins = new List<Coin>();
             tips = new List<TextTip>();
-            playerSpawn = new Point(12, 14);
+            playerSpawn = new Point(47, 15);
         }
 
         public void ShowSplash()
         {
             Console.ForegroundColor = GameSettings.SplashColors[new Random().Next() % GameSettings.SplashColors.Length];
             Console.Clear();
-            Console.SetCursorPosition(25, 10);
-            Console.Write(" _______  __   __  _______  _______  ______    ___   _______  ___");
-            Console.SetCursorPosition(25, 11);
-            Console.Write("|       ||  | |  ||       ||       ||    _ |  |   | |   _   ||   |");
-            Console.SetCursorPosition(25, 12);
-            Console.Write("|_     _||  | |  ||_     _||   _   ||   | ||  |   | |  |_|  ||   |");
-            Console.SetCursorPosition(25, 13);
-            Console.Write("  |   |  |  |_|  |  |   |  |  | |  ||   |_||_ |   | |       ||   |");
-            Console.SetCursorPosition(25, 14);
-            Console.Write("  |   |  |       |  |   |  |  |_|  ||    __  ||   | |       ||   |___");
-            Console.SetCursorPosition(25, 15);
-            Console.Write("  |   |  |       |  |   |  |       ||   |  | ||   | |   _   ||       |");
-            Console.SetCursorPosition(25, 16);
-            Console.Write("  |___|  |_______|  |___|  |_______||___|  |_||___| |__| |__||_______|");
+            Console.SetCursorPosition(30, 10);
+            Console.Write(" ___      _______  __   __  _______  ___        ____");
+            Console.SetCursorPosition(30, 11);
+            Console.Write("|   |    |       ||  | |  ||       ||   |      |    |");
+            Console.SetCursorPosition(30, 12);
+            Console.Write("|   |    |    ___||  |_|  ||    ___||   |       |   |");
+            Console.SetCursorPosition(30, 13);
+            Console.Write("|   |    |   |___ |       ||   |___ |   |       |   |");
+            Console.SetCursorPosition(30, 14);
+            Console.Write("|   |___ |    ___||       ||    ___||   |___    |   |");
+            Console.SetCursorPosition(30, 15);
+            Console.Write("|       ||   |___  |     | |   |___ |       |   |   |");
+            Console.SetCursorPosition(30, 16);
+            Console.Write("|_______||_______|  |___|  |_______||_______|   |___|");
         }
 
         public int GetNumber() { return number; }
@@ -57,7 +57,7 @@ namespace Game.Level
             SpawnWalls();
             SpawnEnemies();
             SpawnCoins();
-            if(GameSettings.TipsOn)
+            if (GameSettings.TipsOn)
                 SpawnTips();
             SpawnFinish();
 
@@ -90,20 +90,25 @@ namespace Game.Level
             walls.Add(new Wall(new Point(0, 0), new Point(0, 29)));         // Main frame left
             walls.Add(new Wall(new Point(0, 29), new Point(120, 29)));      // Main frame bottom
             walls.Add(new Wall(new Point(119, 0), new Point(120, 29)));     // Main frame right
-            
+
             walls.Add(new Wall(new Point(107, 1), new Point(107, 4)));      // Top right square left
             walls.Add(new Wall(new Point(107, 4), new Point(120, 4)));      // Top right square bottom
             walls.Add(new Wall(new Point(0, 2), new Point(107, 2)));        // Top strip
-            
-            walls.Add(new Wall(new Point(10, 13), new Point(109, 13)));     // Room 1 top
-            walls.Add(new Wall(new Point(10, 15), new Point(70, 15)));      // Room 1 bottom 1
-            walls.Add(new Wall(new Point(71, 15), new Point(109, 15)));     // Room 1 bottom 2
-            walls.Add(new Wall(new Point(10, 13), new Point(10, 15)));      // Room 1 left
-            walls.Add(new Wall(new Point(109, 13), new Point(109, 16)));    // Room 1 right
 
-            walls.Add(new Wall(new Point(69, 15), new Point(69, 21)));      // Room 2 left
-            walls.Add(new Wall(new Point(71, 15), new Point(71, 21)));      // Room 2 right
-            walls.Add(new Wall(new Point(69, 21), new Point(72, 21)));      // Room 2 bottom
+            walls.Add(new Wall(new Point(46, 14), new Point(50, 14)));      // Spawn point top wall
+            walls.Add(new Wall(new Point(46, 16), new Point(50, 16)));      // Spawn point bottom wall
+            walls.Add(new Wall(new Point(46, 14), new Point(46, 16)));      // Spawn point left wall
+
+            walls.Add(new Wall(new Point(49, 11), new Point(49, 14)));      // Room 1 top left wall
+            walls.Add(new Wall(new Point(49, 16), new Point(49, 19)));      // Room 1 bottom left wall
+            walls.Add(new Wall(new Point(49, 11), new Point(69, 11)));      // Room 1 top wall
+            walls.Add(new Wall(new Point(49, 19), new Point(69, 19)));      // Room 1 bottom wall
+            walls.Add(new Wall(new Point(68, 11), new Point(48, 14)));      // Room 1 top right wall
+            walls.Add(new Wall(new Point(68, 16), new Point(48, 19)));      // Room 1 bottom right wall
+
+            walls.Add(new Wall(new Point(68, 14), new Point(71, 14)));      // End point top wall
+            walls.Add(new Wall(new Point(68, 16), new Point(72, 16)));      // End point bottom wall
+            walls.Add(new Wall(new Point(71, 14), new Point(71, 16)));      // End point right wall
 
             foreach (Wall w in walls)
                 w.Paint();
@@ -111,7 +116,21 @@ namespace Game.Level
 
         public void SpawnEnemies()
         {
-            enemies.Add(new Enemy(new Point(70, 17), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(51, 12), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(52, 18), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(53, 12), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(54, 18), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(55, 12), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(56, 18), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(57, 12), Enemy.FacingVertical));
+
+            enemies.Add(new Enemy(new Point(60, 18), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(61, 12), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(62, 18), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(63, 12), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(64, 18), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(65, 12), Enemy.FacingVertical));
+            enemies.Add(new Enemy(new Point(66, 18), Enemy.FacingVertical));
 
             foreach (Enemy e in enemies)
                 e.Paint();
@@ -119,38 +138,18 @@ namespace Game.Level
 
         public void SpawnCoins()
         {
-            coins.Add(new Coin(new Point(40, 14), 1));
+            coins.Add(new Coin(new Point(58, 15), 1));
+            coins.Add(new Coin(new Point(59, 15), 1));
 
             foreach (Coin c in coins)
                 c.Paint();
         }
 
-        public void SpawnTips()
-        {
-            if (GameSettings.PolishOn)
-            {
-                tips.Add(new TextTip("To jesteś ty", new Point(10, 17), 2, TextTip.SideUp, true));
-                tips.Add(new TextTip("To jest piniondz", new Point(34, 17), 6, TextTip.SideUp, true));
-                tips.Add(new TextTip("Tu musisz się dostać", new Point(88, 17), 19, TextTip.SideUp, true));
-                tips.Add(new TextTip("To jest przeciwnik. Auć!", new Point(62, 23), 8, TextTip.SideUp, true));
-                tips.Add(new TextTip("Poruszaj się przy użyciu strzałek", new Point(48, 11), 0, 0, false));
-            }
-            else
-            {
-                tips.Add(new TextTip("This is you", new Point(10, 17), 2, TextTip.SideUp, true));
-                tips.Add(new TextTip("This is a coin", new Point(34, 17), 6, TextTip.SideUp, true));
-                tips.Add(new TextTip("This is where you have to get", new Point(88, 17), 19, TextTip.SideUp, true));
-                tips.Add(new TextTip("This is an enemy. Ouch!", new Point(62, 23), 8, TextTip.SideUp, true));
-                tips.Add(new TextTip("Move by using arrow keys", new Point(48, 11), 0, 0, false));
-            }
-
-            foreach (TextTip t in tips)
-                t.Paint();
-        }
+        public void SpawnTips() {}
 
         public void SpawnFinish()
         {
-            finish = new Finish(new Point(107, 14));
+            finish = new Finish(new Point(70, 15));
             finish.Paint();
         }
 

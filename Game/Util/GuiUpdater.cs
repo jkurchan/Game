@@ -12,7 +12,11 @@ namespace Game
     {
         public static void SetLevel(int level)
         {
-            string text = "Level: " + level;
+            string text;
+            if (GameSettings.PolishOn)
+                text = "Poziom: " + level;
+            else
+                text = "Level: " + level + " ";
             Console.SetCursorPosition(109, 1);
             Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.Write(text);
@@ -20,7 +24,11 @@ namespace Game
 
         public static void SetPoints(int points)
         {
-            string text = "Points: " + points;
+            string text;
+            if (GameSettings.PolishOn)
+                text = "Punkty: " + points;
+            else
+                text = "Points: " + points;
             Console.SetCursorPosition(109, 2);
             Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.Write(text);
@@ -28,7 +36,11 @@ namespace Game
 
         public static void SetLives(int lives)
         {
-            string text = "Lives: " + lives;
+            string text;
+            if (GameSettings.PolishOn)
+                text = "Życia: " + lives;
+            else
+                text = "Lives: " + lives;
             Console.SetCursorPosition(109, 3);
             Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.Write(text);
@@ -36,10 +48,21 @@ namespace Game
 
         public static void ShowTopStrip()
         {
-            string text = "Build: " + Application.Version + ", " +
+            string text;
+            if (GameSettings.PolishOn)
+                text = "Wersja: " + Application.Version + ", " +
+                "[Esc] Wyjscie, " +
+                "[F1] Podpowiedzi " + (GameSettings.TipsOn ? "TAK" : "NIE") + ", " +
+                "[F2] Muzyka " + (GameSettings.MusicOn ? "TAK" : "NIE") + ", " +
+                "[F3] Polski   ";
+            else
+                text = "Build: " + Application.Version + ", " +
                 "[Esc] Exit, " +
-                "[F1] Tips " + (GameSettings.TipsOn ? "ON" : "OFF");
+                "[F1] Tips " + (GameSettings.TipsOn ? "ON" : "OFF") + ", " +
+                "[F2] Music " + (GameSettings.MusicOn ? "ON" : "OFF") + ", " +
+                "[F3] English                ";
             Console.SetCursorPosition(2, 1);
+            Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.Write(text);
         }
 

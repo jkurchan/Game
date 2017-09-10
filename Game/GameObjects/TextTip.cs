@@ -28,6 +28,7 @@ namespace Game.GameObjects
 
         public void Paint()
         {
+            Console.ForegroundColor = GameSettings.TipsColor;
             Console.SetCursorPosition(TextPos.X, TextPos.Y);
             Console.Write(Text);
 
