@@ -14,27 +14,11 @@ namespace Game
         {
             Console.Title = GameSettings.Title;
             Console.CursorVisible = false;
+
             GuiUpdater.ShowCompanyNameScreen();
             MusicPlayer.GetInstance().Play();
             GuiUpdater.ShowTitleScreen();
-            Application.State = GameState.NextLevel;
-            GameLoop.GetInstance().Start();
-
-            switch(Application.State)
-            {
-                case GameState.Exit:
-                    break;
-                case GameState.Lost:
-                    GuiUpdater.ShowGameLostScreen();
-                    Console.ReadKey(true);
-                    break;
-                case GameState.Won:
-                    GuiUpdater.ShowGameWonScreen();
-                    Console.ReadKey(true);
-                    break;
-                default:
-                    break;
-            }
+            GuiUpdater.ShowMainMenu();
 
             MusicPlayer.GetInstance().Stop();
         }

@@ -1,5 +1,6 @@
 ﻿using Game.Game;
 using Game.Level;
+using Game.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,68 +12,73 @@ namespace Game
 {
     class GameLoop
     {
-        private static GameLoop gameLoop;
-
         public long Time { get; set; }
         public int Points { get; set; }
         public int Lives { get; set; }
         public int CurrentLevel { get; set; }
+        public bool Lost { get; set; }
+        public bool Exit { get; set; }
+        public bool NextLevel { get; set; }
+        public bool Resuming { get; set; }
 
         private Player player;
         private List<ILevel> levels;
 
-        private GameLoop()
+        public GameLoop()
         {
             Time = 0;
             Points = 0;
             Lives = 2;
             CurrentLevel = -1;
+            Lost = false;
+            Exit = false;
+            NextLevel = true;
+            Resuming = false;
 
             player = new Player(new Point(0, 0));
             levels = new List<ILevel>();
+            levels.Add(new Level0());
+            levels.Add(new Level1());
+            levels.Add(new Level2());
+            levels.Add(new Level99());
         }
 
-        public static GameLoop GetInstance()
+        public int Start()
         {
-            if (gameLoop == null)
-                gameLoop = new GameLoop();
-            return gameLoop;
-        }
-
-        public void Start()
-        {
-            loadLevels();
-
             while (true)
             {
-                switch (Application.State)
+                if (!Resuming)
                 {
-                    case GameState.Exit:
-                        return;
-                    case GameState.Lost:
-                        return;
-                    case GameState.Won:
-                        return;
-                    case GameState.NextLevel:
-                        setupGame();
-                        startPlaying();
-                        break;
-                    default:
-                        break;
+                    if (Lost) return 1;
+                    if (Exit) return 2;
+                    if (NextLevel)
+                    {
+                        Lives++;
+                        CurrentLevel++;
+                    }
                 }
+
+                SetupGame();
+                StartPlaying();
             }
         }
 
-        private void setupGame()
+        private void SetupGame()
         {
-            ILevel level = levels[++CurrentLevel];
+            ILevel level = levels[CurrentLevel];
 
             level.ShowSplash();
-            Thread.Sleep(2000);
+            Thread.Sleep(1500);
 
-            player.MoveToPosition(level.Create(), level);
+            if (!Resuming)
+                player.MoveToPosition(level.Create(), level);
+            level.Paint();
             player.Paint();
-            Lives++;
+
+            Lost = false;
+            Exit = false;
+            NextLevel = false;
+            Resuming = false;
 
             GuiUpdater.SetLevel(level.GetNumber());
             GuiUpdater.SetPoints(Points);
@@ -80,14 +86,14 @@ namespace Game
             GuiUpdater.ShowTopStrip();
         }
 
-        private void startPlaying()
+        private void StartPlaying()
         {
             ILevel level = levels[CurrentLevel];
             ConsoleKeyInfo keyInfo;
 
             while (true)
             {
-                if (Console.KeyAvailable)
+                while (Console.KeyAvailable)
                 {
                     keyInfo = Console.ReadKey(true);
                     switch (keyInfo.Key)
@@ -105,7 +111,7 @@ namespace Game
                             player.Move(new Point(1, 0), level, Time);
                             break;
                         case ConsoleKey.Escape:
-                            Application.State = GameState.Exit;
+                            Exit = true;
                             return;
                         case ConsoleKey.F1:
                             if (GameSettings.TipsOn = !GameSettings.TipsOn)
@@ -153,7 +159,7 @@ namespace Game
 
                     if (Lives < 1)
                     {
-                        Application.State = GameState.Lost;
+                        Lost = true;
                         return;
                     }
 
@@ -166,20 +172,13 @@ namespace Game
 
                 if(level.CheckFinishCollision(player.Pos))
                 {
-                    Application.State = GameState.NextLevel;
+                    NextLevel = true;
                     break;
                 }
 
                 Time++;
                 Thread.Sleep(16);
             }
-        }
-
-        private void loadLevels()
-        {
-            levels.Add(new Level0());
-            levels.Add(new Level1());
-            levels.Add(new Level99());
         }
     }
 }

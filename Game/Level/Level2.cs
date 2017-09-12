@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Game.Level
 {
-    class Level1 : ILevel
+    class Level2 : ILevel
     {
         private int number;
         private List<Wall> walls;
@@ -17,9 +17,9 @@ namespace Game.Level
         private Finish finish;
         private Point playerSpawn;
 
-        public Level1()
+        public Level2()
         {
-            number = 1;
+            number = 2;
             walls = new List<Wall>();
             enemies = new List<Enemy>();
             coins = new List<Coin>();
@@ -32,19 +32,19 @@ namespace Game.Level
             Console.ForegroundColor = GameSettings.SplashColors[new Random().Next() % GameSettings.SplashColors.Length];
             Console.Clear();
             Console.SetCursorPosition(30, 10);
-            Console.Write(" ___      _______  __   __  _______  ___        ____");
+            Console.Write(" ___      _______  __   __  _______  ___        _______");
             Console.SetCursorPosition(30, 11);
-            Console.Write("|   |    |       ||  | |  ||       ||   |      |    |");
+            Console.Write("|   |    |       ||  | |  ||       ||   |      |       |");
             Console.SetCursorPosition(30, 12);
-            Console.Write("|   |    |    ___||  |_|  ||    ___||   |       |   |");
+            Console.Write("|   |    |    ___||  |_|  ||    ___||   |      |____   |");
             Console.SetCursorPosition(30, 13);
-            Console.Write("|   |    |   |___ |       ||   |___ |   |       |   |");
+            Console.Write("|   |    |   |___ |       ||   |___ |   |       ____|  |");
             Console.SetCursorPosition(30, 14);
-            Console.Write("|   |___ |    ___||       ||    ___||   |___    |   |");
+            Console.Write("|   |___ |    ___||       ||    ___||   |___   | ______|");
             Console.SetCursorPosition(30, 15);
-            Console.Write("|       ||   |___  |     | |   |___ |       |   |   |");
+            Console.Write("|       ||   |___  |     | |   |___ |       |  | |_____");
             Console.SetCursorPosition(30, 16);
-            Console.Write("|_______||_______|  |___|  |_______||_______|   |___|");
+            Console.Write("|_______||_______|  |___|  |_______||_______|  |_______|");
         }
 
         public int GetNumber() { return number; }
@@ -149,6 +149,9 @@ namespace Game.Level
             enemies.Add(new Enemy(new Point(64, 18), Enemy.FacingVertical));
             enemies.Add(new Enemy(new Point(65, 12), Enemy.FacingVertical));
             enemies.Add(new Enemy(new Point(66, 18), Enemy.FacingVertical));
+
+            enemies.Add(new Enemy(new Point(50, 12), Enemy.FacingHorizontal));
+            enemies.Add(new Enemy(new Point(67, 18), Enemy.FacingHorizontal));
         }
 
         public void SpawnCoins()
@@ -157,11 +160,12 @@ namespace Game.Level
             coins.Add(new Coin(new Point(59, 15), 1));
         }
 
-        public void SpawnTips() {}
+        public void SpawnTips() { }
 
         public void SpawnFinish()
         {
             finish = new Finish(new Point(70, 15));
+            finish.Paint();
         }
 
         public void RemoveWalls()

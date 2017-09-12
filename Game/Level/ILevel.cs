@@ -13,6 +13,7 @@ namespace Game.Level
 
         Point Create();
         Point Restart();
+        void Paint();
         void Remove();
 
         void SpawnWalls();

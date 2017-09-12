@@ -35,6 +35,7 @@ namespace Game
         public static ConsoleColor CoinColor = ConsoleColor.Yellow;
         public static ConsoleColor FinishColor = ConsoleColor.Magenta;
         public static ConsoleColor TipsColor = ConsoleColor.Cyan;
+        public static ConsoleColor MenuColor = ConsoleColor.Green;
 
         public static ConsoleColor CompanyNameBackground = ConsoleColor.White;
         public static ConsoleColor Background = ConsoleColor.Black;

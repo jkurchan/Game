@@ -1,4 +1,5 @@
 ﻿using Game.Game;
+using Game.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Game
 {
     static class GuiUpdater
     {
+        static GameLoop gameLoop;
+
         public static void SetLevel(int level)
         {
             string text;
@@ -187,6 +190,102 @@ namespace Game
             Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.WriteLine("You won. :>");
             Console.Write("Press any key to exit...");
+        }
+
+        public static void DrawMainMenu()
+        {
+            Console.Clear();
+            Console.ForegroundColor = GameSettings.MenuColor;
+
+            Console.SetCursorPosition(30, 6);
+            Console.WriteLine(" ▄▀▀▄ ▄▀▄  ▄▀▀▄▀▀▀▄  ▄▀▀▀▀▄   ▄▀▀▄    ▄▀▀▄  ▄▀▀▄ █  ▄▀▀█▄");
+            Console.SetCursorPosition(30, 7);
+            Console.WriteLine("█  █ ▀  █ █   █   █ █      █ █   █       █ █  █ ▄▀   ▄▀ ▀▄");
+            Console.SetCursorPosition(30, 8);
+            Console.WriteLine("   █    █    █▀▀█▀  █      █    █        █    █▀▄    █▄▄▄█");
+            Console.SetCursorPosition(30, 9);
+            Console.WriteLine("  █    █   ▄▀    █  ▀▄    ▄▀   █   ▄    █    █   █  ▄▀   █");
+            Console.SetCursorPosition(30, 10);
+            Console.WriteLine("▄▀   ▄▀   █     █     ▀▀▀▀      ▀▄▀ ▀▄ ▄▀  ▄▀   █  █   ▄▀");
+            Console.SetCursorPosition(30, 11);
+            Console.WriteLine("█    █                                ▀    █");
+        }
+
+        public static void ShowMainMenu()
+        {
+            DrawMainMenu();
+            MainMenu menu = new MainMenu(20);
+
+            MenuItem itemStart = new MenuItem("Start new");
+            itemStart.OnClick += ItemStart_OnClick;
+
+            MenuItem itemResume = new MenuItem("Resume previous");
+            itemResume.OnClick += ItemResume_OnClick;
+
+            MenuItem itemOptions = new MenuItem("Options");
+            itemOptions.OnClick += ItemOptions_OnClick;
+
+            MenuItem itemLeave = new MenuItem("Leave");
+            itemLeave.OnClick += ItemLeave_OnClick;
+
+            menu.AddItem(itemStart);
+            menu.AddItem(itemResume);
+            menu.AddItem(itemOptions);
+            menu.AddItem(itemLeave);
+
+            while (true)
+            {
+                menu.Show();
+
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                    
+                    switch(keyInfo.Key)
+                    {
+                        case ConsoleKey.UpArrow:
+                            menu.SelectPrevious();
+                            break;
+                        case ConsoleKey.DownArrow:
+                            menu.SelectNext();
+                            break;
+                        case ConsoleKey.Enter:
+                            menu.Click();
+                            DrawMainMenu();
+                            break;
+                    }
+                }
+            }
+        }
+
+        private static int ItemResume_OnClick()
+        {
+            if (gameLoop == null) return -1;
+
+            gameLoop.Resuming = true;
+            int result = gameLoop.Start();
+            if (result == 1) gameLoop = null;
+            return result;
+        }
+
+        private static int ItemLeave_OnClick()
+        {
+            Environment.Exit(1);
+            return 0;
+        }
+
+        private static int ItemOptions_OnClick()
+        {
+            return 0;
+        }
+
+        private static int ItemStart_OnClick()
+        {
+            gameLoop = new GameLoop();
+
+            int result = gameLoop.Start();
+            if (result == 1) gameLoop = null;
+            return result;
         }
     }
 }

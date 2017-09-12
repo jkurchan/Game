@@ -12,5 +12,6 @@ namespace Game
         public const int Won = 1;
         public const int Lost = 2;
         public const int NextLevel = 3;
+        public const int MainMenu = 4;
     }
 }

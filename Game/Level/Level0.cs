@@ -51,15 +51,14 @@ namespace Game.Level
 
         public Point Create()
         {
-            Console.BackgroundColor = GameSettings.Background;
-            Console.Clear();
-
             SpawnWalls();
             SpawnEnemies();
             SpawnCoins();
             if(GameSettings.TipsOn)
                 SpawnTips();
             SpawnFinish();
+
+            Paint();
 
             return playerSpawn;
         }
@@ -72,7 +71,29 @@ namespace Game.Level
             SpawnEnemies();
             SpawnCoins();
 
+            Paint();
+
             return playerSpawn;
+        }
+
+        public void Paint()
+        {
+            Console.BackgroundColor = GameSettings.Background;
+            Console.Clear();
+
+            foreach (Wall w in walls)
+                w.Paint();
+
+            foreach (Enemy e in enemies)
+                e.Paint();
+
+            foreach (Coin c in coins)
+                c.Paint();
+
+            foreach (TextTip t in tips)
+                t.Paint();
+
+            finish.Paint();
         }
 
         public void Remove()
@@ -104,25 +125,16 @@ namespace Game.Level
             walls.Add(new Wall(new Point(69, 15), new Point(69, 21)));      // Room 2 left
             walls.Add(new Wall(new Point(71, 15), new Point(71, 21)));      // Room 2 right
             walls.Add(new Wall(new Point(69, 21), new Point(72, 21)));      // Room 2 bottom
-
-            foreach (Wall w in walls)
-                w.Paint();
         }
 
         public void SpawnEnemies()
         {
             enemies.Add(new Enemy(new Point(70, 17), Enemy.FacingVertical));
-
-            foreach (Enemy e in enemies)
-                e.Paint();
         }
 
         public void SpawnCoins()
         {
             coins.Add(new Coin(new Point(40, 14), 1));
-
-            foreach (Coin c in coins)
-                c.Paint();
         }
 
         public void SpawnTips()
@@ -143,15 +155,11 @@ namespace Game.Level
                 tips.Add(new TextTip("This is an enemy. Ouch!", new Point(62, 23), 8, TextTip.SideUp, true));
                 tips.Add(new TextTip("Move by using arrow keys", new Point(48, 11), 0, 0, false));
             }
-
-            foreach (TextTip t in tips)
-                t.Paint();
         }
 
         public void SpawnFinish()
         {
             finish = new Finish(new Point(107, 14));
-            finish.Paint();
         }
 
         public void RemoveWalls()

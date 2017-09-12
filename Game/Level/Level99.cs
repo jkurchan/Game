@@ -25,7 +25,6 @@ namespace Game
             enemies = new List<Enemy>();
             coins = new List<Coin>();
             tips = new List<TextTip>();
-            finish = new Finish(new Point(5, 5));
             playerSpawn = new Point(5, 26);
         }
 
@@ -52,15 +51,15 @@ namespace Game
         public int GetNumber() { return number; }
 
         public Point Create()
-        {
-            Console.BackgroundColor = GameSettings.Background;
-            Console.Clear();
-            
+        {            
             SpawnWalls();
             SpawnEnemies();
             SpawnCoins();
-            SpawnTips();
+            if(GameSettings.TipsOn)
+                SpawnTips();
             SpawnFinish();
+
+            Paint();
 
             return playerSpawn;
         }
@@ -73,7 +72,29 @@ namespace Game
             SpawnEnemies();
             SpawnCoins();
 
-            return new Point(5, 26);
+            Paint();
+
+            return playerSpawn;
+        }
+
+        public void Paint()
+        {
+            Console.BackgroundColor = GameSettings.Background;
+            Console.Clear();
+
+            foreach (Wall w in walls)
+                w.Paint();
+
+            foreach (Enemy e in enemies)
+                e.Paint();
+
+            foreach (Coin c in coins)
+                c.Paint();
+
+            foreach (TextTip t in tips)
+                t.Paint();
+
+            finish.Paint();
         }
 
         public void Remove()
@@ -108,9 +129,6 @@ namespace Game
             walls.Add(new Wall(new Point(63, 25), new Point(63, 30)));
             walls.Add(new Wall(new Point(47, 18), new Point(63, 18)));
             walls.Add(new Wall(new Point(63, 18), new Point(63, 24)));
-
-            foreach (Wall w in walls)
-                w.Paint();
         }
 
         public void SpawnEnemies()
@@ -171,9 +189,6 @@ namespace Game
             // Room 2.2
             coins.Add(new Coin(new Point(48, 19), 1));
             coins.Add(new Coin(new Point(62, 19), 1));
-
-            foreach (Coin c in coins)
-                c.Paint();
         }
 
         public void SpawnTips()
@@ -184,7 +199,7 @@ namespace Game
         
         public void SpawnFinish()
         {
-            finish.Paint();
+            finish = new Finish(new Point(5, 5));
         }
 
         public void RemoveWalls()
