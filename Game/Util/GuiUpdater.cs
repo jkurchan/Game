@@ -13,6 +13,12 @@ namespace Game
     {
         static GameLoop gameLoop;
 
+        public static void ClearScreen()
+        {
+            Console.ForegroundColor = GameSettings.Background;
+            Console.Clear();
+        }
+
         public static void SetLevel(int level)
         {
             string text;
@@ -222,6 +228,9 @@ namespace Game
             MenuItem itemResume = new MenuItem("Resume previous");
             itemResume.OnClick += ItemResume_OnClick;
 
+            MenuItem itemCreate = new MenuItem("Level creator");
+            itemCreate.OnClick += ItemCreate_OnClick;
+
             MenuItem itemOptions = new MenuItem("Options");
             itemOptions.OnClick += ItemOptions_OnClick;
 
@@ -230,6 +239,7 @@ namespace Game
 
             menu.AddItem(itemStart);
             menu.AddItem(itemResume);
+            menu.AddItem(itemCreate);
             menu.AddItem(itemOptions);
             menu.AddItem(itemLeave);
 
@@ -256,6 +266,14 @@ namespace Game
                     }
                 }
             }
+        }
+
+        private static int ItemCreate_OnClick()
+        {
+            LevelCreator creator = new LevelCreator();
+            creator.Start();
+
+            return 0;
         }
 
         private static int ItemResume_OnClick()

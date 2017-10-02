@@ -63,6 +63,7 @@
     <Compile Include="GameObjects\Finish.cs" />
     <Compile Include="GameObjects\TextTip.cs" />
     <Compile Include="Game\Application.cs" />
+    <Compile Include="Game\LevelCreator.cs" />
     <Compile Include="Game\MusicPlayer.cs" />
     <Compile Include="Level\ILevel.cs" />
     <Compile Include="Level\Level0.cs" />
