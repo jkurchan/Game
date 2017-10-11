@@ -1,4 +1,5 @@
 ﻿using Game.Level;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace Game
 {
     class Player : IGameObject
     {
+        [JsonProperty]
         public Point Pos { get; set; }
-        
+
+        [JsonProperty]
         private Point oldPos;
 
         public Player(Point p)

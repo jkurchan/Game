@@ -47,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -63,6 +66,7 @@
     <Compile Include="GameObjects\Finish.cs" />
     <Compile Include="GameObjects\TextTip.cs" />
     <Compile Include="Game\Application.cs" />
+    <Compile Include="Game\Level.cs" />
     <Compile Include="Game\LevelCreator.cs" />
     <Compile Include="Game\MusicPlayer.cs" />
     <Compile Include="Level\ILevel.cs" />
@@ -78,7 +82,7 @@
     <Compile Include="GameObjects\IGameObject.cs" />
     <Compile Include="Level\Level99.cs" />
     <Compile Include="GameObjects\Obstacle.cs" />
-    <Compile Include="Util\MainMenu.cs" />
+    <Compile Include="Util\Menu.cs" />
     <Compile Include="Util\MenuItem.cs" />
     <Compile Include="Util\Point.cs" />
     <Compile Include="Game\GameLoop.cs" />
@@ -92,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

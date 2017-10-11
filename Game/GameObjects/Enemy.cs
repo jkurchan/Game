@@ -1,4 +1,5 @@
 ﻿using Game.Level;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,19 @@ namespace Game
         public const int FacingHorizontal = 1;
         public const int FacingVertical = 2;
 
+        [JsonProperty]
         public Point Pos { get; set; }
 
+        [JsonProperty]
         private int cooldown = 3;
+
+        [JsonProperty]
         private Point oldPos;
+
+        [JsonProperty]
         private int facing;
+
+        [JsonProperty]
         private Point movingPoint;
 
         public Enemy(Point p, int facing)

@@ -1,4 +1,5 @@
 ﻿using Game.Level;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,10 @@ namespace Game
 {
     class Coin : IGameObject
     {
+        [JsonProperty]
         public Point Pos;
+
+        [JsonProperty]
         public int Points;
 
         public Coin(Point p, int points)

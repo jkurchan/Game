@@ -22,6 +22,12 @@ namespace Game.Level
         void SpawnTips();
         void SpawnFinish();
 
+        void PaintWalls();
+        void PaintEnemies();
+        void PaintCoins();
+        void PaintTips();
+        void PaintFinish();
+
         void RemoveWalls();
         void RemoveEnemies();
         void RemoveCoins();

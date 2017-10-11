@@ -81,19 +81,11 @@ namespace Game.Level
             Console.BackgroundColor = GameSettings.Background;
             Console.Clear();
 
-            foreach (Wall w in walls)
-                w.Paint();
-
-            foreach (Enemy e in enemies)
-                e.Paint();
-
-            foreach (Coin c in coins)
-                c.Paint();
-
-            foreach (TextTip t in tips)
-                t.Paint();
-
-            finish.Paint();
+            PaintWalls();
+            PaintCoins();
+            PaintEnemies();
+            PaintTips();
+            PaintFinish();
         }
 
         public void Remove()
@@ -160,6 +152,35 @@ namespace Game.Level
         public void SpawnFinish()
         {
             finish = new Finish(new Point(107, 14));
+        }
+
+        public void PaintWalls()
+        {
+            foreach (Wall w in walls)
+                w.Paint();
+        }
+
+        public void PaintEnemies()
+        {
+            foreach (Enemy e in enemies)
+                e.Paint();
+        }
+
+        public void PaintCoins()
+        {
+            foreach (Coin c in coins)
+                c.Paint();
+        }
+
+        public void PaintTips()
+        {
+            foreach (TextTip t in tips)
+                t.Paint();
+        }
+
+        public void PaintFinish()
+        {
+            finish.Paint();
         }
 
         public void RemoveWalls()

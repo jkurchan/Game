@@ -220,7 +220,7 @@ namespace Game
         public static void ShowMainMenu()
         {
             DrawMainMenu();
-            MainMenu menu = new MainMenu(20);
+            Menu menu = new Menu(20);
 
             MenuItem itemStart = new MenuItem("Start new");
             itemStart.OnClick += ItemStart_OnClick;

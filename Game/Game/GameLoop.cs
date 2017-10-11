@@ -115,7 +115,10 @@ namespace Game
                             return;
                         case ConsoleKey.F1:
                             if (GameSettings.TipsOn = !GameSettings.TipsOn)
+                            {
                                 level.SpawnTips();
+                                level.PaintTips();
+                            }
                             else
                                 level.RemoveTips();
                             GuiUpdater.ShowTopStrip();
@@ -133,6 +136,7 @@ namespace Game
                             {
                                 level.RemoveTips();
                                 level.SpawnTips();
+                                level.PaintTips();
                             }
                             GuiUpdater.SetLevel(level.GetNumber());
                             GuiUpdater.SetPoints(Points);
@@ -162,11 +166,13 @@ namespace Game
                         Lost = true;
                         return;
                     }
-
+                    
+                    player.MoveToPosition(level.Restart(), level);
                     GuiUpdater.SetLevel(level.GetNumber());
                     GuiUpdater.SetLives(Lives);
+                    GuiUpdater.SetPoints(Points);
+                    GuiUpdater.ShowTopStrip();
 
-                    player.MoveToPosition(level.Restart(), level);
                     continue;
                 }
 
