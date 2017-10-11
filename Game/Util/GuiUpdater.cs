@@ -62,14 +62,12 @@ namespace Game
                 text = "Wersja: " + Application.Version + ", " +
                 "[Esc] Wyjscie, " +
                 "[F1] Podpowiedzi " + (GameSettings.TipsOn ? "TAK" : "NIE") + ", " +
-                "[F2] Muzyka " + (GameSettings.MusicOn ? "TAK" : "NIE") + ", " +
-                "[F3] Polski   ";
+                "[F2] Polski   ";
             else
                 text = "Build: " + Application.Version + ", " +
                 "[Esc] Exit, " +
                 "[F1] Tips " + (GameSettings.TipsOn ? "ON" : "OFF") + ", " +
-                "[F2] Music " + (GameSettings.MusicOn ? "ON" : "OFF") + ", " +
-                "[F3] English                ";
+                "[F2] English                ";
             Console.SetCursorPosition(2, 1);
             Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.Write(text);

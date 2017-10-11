@@ -124,13 +124,6 @@ namespace Game
                             GuiUpdater.ShowTopStrip();
                             break;
                         case ConsoleKey.F2:
-                            if (GameSettings.MusicOn = !GameSettings.MusicOn)
-                                MusicPlayer.GetInstance().Resume();
-                            else
-                                MusicPlayer.GetInstance().Pause();
-                            GuiUpdater.ShowTopStrip();
-                            break;
-                        case ConsoleKey.F3:
                             GameSettings.PolishOn = !GameSettings.PolishOn;
                             if (GameSettings.TipsOn)
                             {

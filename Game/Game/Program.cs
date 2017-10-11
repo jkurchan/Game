@@ -16,11 +16,8 @@ namespace Game
             Console.CursorVisible = false;
 
             GuiUpdater.ShowCompanyNameScreen();
-            MusicPlayer.GetInstance().Play();
             GuiUpdater.ShowTitleScreen();
             GuiUpdater.ShowMainMenu();
-
-            MusicPlayer.GetInstance().Stop();
         }
     }
 }
