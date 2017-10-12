@@ -1,10 +1,6 @@
-﻿using Game.Level;
+﻿using Game.Game;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -18,7 +14,7 @@ namespace Game
             Pos = point;
         }
 
-        public void Move(Point p, ILevel level, long time)
+        public void Move(Point p, Level level, long time)
         {
             Point newPos = new Point(p.X + Pos.X, p.Y + Pos.Y);
             if (GameRule.CanDraw(newPos, level))
@@ -28,7 +24,7 @@ namespace Game
             }
         }
 
-        public void MoveToPosition(Point p, ILevel level)
+        public void MoveToPosition(Point p, Level level)
         {
             if (GameRule.CanDraw(p, level))
             {

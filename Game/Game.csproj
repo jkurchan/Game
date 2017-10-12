@@ -68,10 +68,6 @@
     <Compile Include="Game\Application.cs" />
     <Compile Include="Game\Level.cs" />
     <Compile Include="Game\LevelCreator.cs" />
-    <Compile Include="Level\ILevel.cs" />
-    <Compile Include="Level\Level0.cs" />
-    <Compile Include="Level\Level1.cs" />
-    <Compile Include="Level\Level2.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -79,7 +75,6 @@
     </Compile>
     <Compile Include="Util\GuiUpdater.cs" />
     <Compile Include="GameObjects\IGameObject.cs" />
-    <Compile Include="Level\Level99.cs" />
     <Compile Include="GameObjects\Obstacle.cs" />
     <Compile Include="Util\Menu.cs" />
     <Compile Include="Util\MenuItem.cs" />

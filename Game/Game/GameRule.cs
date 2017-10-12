@@ -1,4 +1,4 @@
-﻿using Game.Level;
+﻿using Game.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Game
 {
     static class GameRule
     {
-        public static bool CanDraw(Point p, ILevel level)
+        public static bool CanDraw(Point p, Level level)
         {
             if (level.CheckWallCollision(p)) return false;
             if (p.X < 0 || p.X >= Console.WindowWidth) return false;

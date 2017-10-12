@@ -1,10 +1,6 @@
-﻿using Game.Level;
+﻿using Game.Game;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -44,12 +40,12 @@ namespace Game
             }
         }
 
-        public void Move(Point p, ILevel level, long time)
+        public void Move(Point p, Level level, long time)
         {
 
         }
 
-        public void MoveToPosition(Point p, ILevel level)
+        public void MoveToPosition(Point p, Level level)
         {
 
         }

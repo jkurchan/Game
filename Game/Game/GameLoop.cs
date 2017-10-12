@@ -1,12 +1,6 @@
 ﻿using Game.Game;
-using Game.Level;
-using Game.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -22,7 +16,7 @@ namespace Game
         public bool Resuming { get; set; }
 
         private Player player;
-        private List<ILevel> levels;
+        private Level level;
 
         public GameLoop()
         {
@@ -36,11 +30,6 @@ namespace Game
             Resuming = false;
 
             player = new Player(new Point(0, 0));
-            levels = new List<ILevel>();
-            levels.Add(new Level0());
-            levels.Add(new Level1());
-            levels.Add(new Level2());
-            levels.Add(new Level99());
         }
 
         public int Start()
@@ -65,13 +54,8 @@ namespace Game
 
         private void SetupGame()
         {
-            ILevel level = levels[CurrentLevel];
-
-            level.ShowSplash();
-            Thread.Sleep(1500);
-
             if (!Resuming)
-                player.MoveToPosition(level.Create(), level);
+                player.MoveToPosition(level.PlayerSpawn, level);
             level.Paint();
             player.Paint();
 
@@ -80,7 +64,7 @@ namespace Game
             NextLevel = false;
             Resuming = false;
 
-            GuiUpdater.SetLevel(level.GetNumber());
+            GuiUpdater.SetLevel(level.Name);
             GuiUpdater.SetPoints(Points);
             GuiUpdater.SetLives(Lives);
             GuiUpdater.ShowTopStrip();
@@ -88,7 +72,6 @@ namespace Game
 
         private void StartPlaying()
         {
-            ILevel level = levels[CurrentLevel];
             ConsoleKeyInfo keyInfo;
 
             while (true)
@@ -113,29 +96,6 @@ namespace Game
                         case ConsoleKey.Escape:
                             Exit = true;
                             return;
-                        case ConsoleKey.F1:
-                            if (GameSettings.TipsOn = !GameSettings.TipsOn)
-                            {
-                                level.SpawnTips();
-                                level.PaintTips();
-                            }
-                            else
-                                level.RemoveTips();
-                            GuiUpdater.ShowTopStrip();
-                            break;
-                        case ConsoleKey.F2:
-                            GameSettings.PolishOn = !GameSettings.PolishOn;
-                            if (GameSettings.TipsOn)
-                            {
-                                level.RemoveTips();
-                                level.SpawnTips();
-                                level.PaintTips();
-                            }
-                            GuiUpdater.SetLevel(level.GetNumber());
-                            GuiUpdater.SetPoints(Points);
-                            GuiUpdater.SetLives(Lives);
-                            GuiUpdater.ShowTopStrip();
-                            break;
                         default:
                             break;
                     }
@@ -160,8 +120,8 @@ namespace Game
                         return;
                     }
                     
-                    player.MoveToPosition(level.Restart(), level);
-                    GuiUpdater.SetLevel(level.GetNumber());
+                    player.MoveToPosition(level.PlayerSpawn, level);
+                    GuiUpdater.SetLevel(level.Name);
                     GuiUpdater.SetLives(Lives);
                     GuiUpdater.SetPoints(Points);
                     GuiUpdater.ShowTopStrip();

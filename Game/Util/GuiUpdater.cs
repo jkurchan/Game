@@ -1,11 +1,7 @@
 ﻿using Game.Game;
 using Game.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -19,16 +15,11 @@ namespace Game
             Console.Clear();
         }
 
-        public static void SetLevel(int level)
+        public static void SetLevel(string name)
         {
-            string text;
-            if (GameSettings.PolishOn)
-                text = "Poziom: " + level;
-            else
-                text = "Level: " + level + " ";
             Console.SetCursorPosition(109, 1);
             Console.ForegroundColor = GameSettings.ObstacleColor;
-            Console.Write(text);
+            Console.Write(name);
         }
 
         public static void SetPoints(int points)
@@ -57,17 +48,8 @@ namespace Game
 
         public static void ShowTopStrip()
         {
-            string text;
-            if (GameSettings.PolishOn)
-                text = "Wersja: " + Application.Version + ", " +
-                "[Esc] Wyjscie, " +
-                "[F1] Podpowiedzi " + (GameSettings.TipsOn ? "TAK" : "NIE") + ", " +
-                "[F2] Polski   ";
-            else
-                text = "Build: " + Application.Version + ", " +
-                "[Esc] Exit, " +
-                "[F1] Tips " + (GameSettings.TipsOn ? "ON" : "OFF") + ", " +
-                "[F2] English                ";
+            string text = "Build: " + Application.Version + ", " +
+                "[Esc] Exit";
             Console.SetCursorPosition(2, 1);
             Console.ForegroundColor = GameSettings.ObstacleColor;
             Console.Write(text);
