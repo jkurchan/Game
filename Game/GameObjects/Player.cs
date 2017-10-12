@@ -6,16 +6,16 @@ namespace Game
 {
     class Player : IGameObject
     {
-        [JsonProperty]
+        [JsonProperty(PropertyName = "pos")]
         public Point Pos { get; set; }
 
-        [JsonProperty]
-        private Point oldPos;
+        [JsonProperty(PropertyName = "oldPos")]
+        public Point OldPos { get; set; }
 
         public Player(Point p)
         {
             Pos = p;
-            oldPos = p;
+            OldPos = p;
         }
 
         public void Move(Point p, Level level, long time)
@@ -23,7 +23,7 @@ namespace Game
             Point newPos = new Point(p.X + Pos.X, p.Y + Pos.Y);
             if (GameRule.CanDraw(newPos, level))
             {
-                oldPos = Pos;
+                OldPos = Pos;
                 Pos = newPos;
                 Paint();
             }
@@ -33,7 +33,7 @@ namespace Game
         {
             if (GameRule.CanDraw(p, level))
             {
-                oldPos = p;
+                OldPos = p;
                 Pos = p;
                 Paint();
             }
@@ -47,7 +47,7 @@ namespace Game
 
         public void Paint()
         {
-            Console.SetCursorPosition(oldPos.X, oldPos.Y);
+            Console.SetCursorPosition(OldPos.X, OldPos.Y);
             Console.Write(' ');
             Console.SetCursorPosition(Pos.X, Pos.Y);
             Console.ForegroundColor = GameSettings.PlayerColor;

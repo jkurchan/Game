@@ -6,8 +6,8 @@ namespace Game.GameObjects
 {
     class Finish : IGameObject
     {
-        [JsonProperty]
-        public Point Pos;
+        [JsonProperty(PropertyName = "pos")]
+        public Point Pos { get; set; }
 
         public Finish(Point p)
         {

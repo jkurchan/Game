@@ -112,7 +112,7 @@ namespace Game.Game
                         DeleteObject();
                         break;
                     case ConsoleKey.F9:
-                        DisplayWarning("To do", 1000);
+                        TestLevel();
                         break;
                     case ConsoleKey.F10:
                         SaveLevel();
@@ -445,6 +445,18 @@ namespace Game.Game
             }
         }
 
+        private void TextLevel()
+        {
+            if (player == null)
+            {
+                DisplayWarning("Can't test a level without a player object!", 2000);
+                return;
+            }
+
+            Level level = new Level(walls, enemies, coins, player, finishes);
+            string json = JsonConvert.SerializeObject(level);
+        }
+
         private void SaveLevel()
         {
             if(player == null)
@@ -461,15 +473,15 @@ namespace Game.Game
             Console.ForegroundColor = ConsoleColor.White;
             string filename = Console.ReadLine();
 
-            foreach (Wall w in boundaries)
-                walls.Add(w);
+            //foreach (Wall w in boundaries)
+                //walls.Add(w);
             Level level = new Level(walls, enemies, coins, player, finishes);
-            String json = JsonConvert.SerializeObject(level);
+            string json = JsonConvert.SerializeObject(level);
 
             Directory.CreateDirectory("custom_maps");
             File.WriteAllText("custom_maps/" + filename + ".mtglvl", json);
 
-            walls.RemoveRange(walls.Count - 5, 4);
+            //walls.RemoveRange(walls.Count - 5, 4);
             DisplayWarning("Map saved successfully!", 1000);
         }
     }

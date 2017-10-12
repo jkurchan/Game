@@ -9,54 +9,55 @@ namespace Game
         public const int FacingHorizontal = 1;
         public const int FacingVertical = 2;
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "pos")]
         public Point Pos { get; set; }
 
-        [JsonProperty]
-        private int cooldown = 3;
+        [JsonProperty(PropertyName = "cooldown")]
+        public int Cooldown { get; set; }
 
-        [JsonProperty]
-        private Point oldPos;
+        [JsonProperty(PropertyName = "oldPos")]
+        public Point OldPos { get; set; }
 
-        [JsonProperty]
-        private int facing;
+        [JsonProperty(PropertyName = "facing")]
+        public int Facing { get; set; }
 
-        [JsonProperty]
-        private Point movingPoint;
+        [JsonProperty(PropertyName = "movingPoint")]
+        public Point MovingPoint { get; set; }
 
         public Enemy(Point p, int facing)
         {
             Pos = p;
-            oldPos = p;
+            OldPos = p;
+            Cooldown = 3;
 
-            this.facing = facing;
+            this.Facing = facing;
             if (facing == FacingHorizontal)
-                movingPoint = new Point(1, 0);
+                MovingPoint = new Point(1, 0);
             else
-                movingPoint = new Point(0, 1);
+                MovingPoint = new Point(0, 1);
         }
 
         public void Move(Point p, Level level, long time)
         {
-            if (time % cooldown != 0) return;
+            if (time % Cooldown != 0) return;
 
-            Point newPos = new Point(Pos.X + movingPoint.X, Pos.Y + movingPoint.Y);
+            Point newPos = new Point(Pos.X + MovingPoint.X, Pos.Y + MovingPoint.Y);
             if (GameRule.CanDraw(newPos, level))
             {
-                oldPos = Pos;
+                OldPos = Pos;
                 Pos = newPos;
                 Paint();
             }
             else
             {
-                if (facing == FacingHorizontal)
-                    movingPoint.X = movingPoint.X == 1 ? -1 : 1;
+                if (Facing == FacingHorizontal)
+                    MovingPoint.X = MovingPoint.X == 1 ? -1 : 1;
                 else
-                    movingPoint.Y = movingPoint.Y == 1 ? -1 : 1;
+                    MovingPoint.Y = MovingPoint.Y == 1 ? -1 : 1;
 
                 if (GameRule.CanDraw(newPos, level))
                 {
-                    oldPos = Pos;
+                    OldPos = Pos;
                     Pos = newPos;
                     Paint();
                 }
@@ -67,7 +68,7 @@ namespace Game
         {
             if (GameRule.CanDraw(p, level))
             {
-                oldPos = Pos;
+                OldPos = Pos;
                 Pos = p;
                 Paint();
             }
@@ -81,7 +82,7 @@ namespace Game
 
         public void Paint()
         {
-            Console.SetCursorPosition(oldPos.X, oldPos.Y);
+            Console.SetCursorPosition(OldPos.X, OldPos.Y);
             Console.Write(' ');
             Console.SetCursorPosition(Pos.X, Pos.Y);
             Console.ForegroundColor = GameSettings.EnemyColor;

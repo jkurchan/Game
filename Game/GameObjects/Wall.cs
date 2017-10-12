@@ -6,8 +6,8 @@ namespace Game
 {
     class Wall : IGameObject
     {
-        [JsonProperty]
-        public List<Obstacle> Obstacles;
+        [JsonProperty(PropertyName = "obstacles")]
+        public List<Obstacle> Obstacles { get; set; }
 
         public Wall(Point sp, Point ep)
         {

@@ -9,10 +9,10 @@ namespace Game
 {
     class Point
     {
-        [JsonProperty]
+        [JsonProperty(PropertyName = "x")]
         public int X { get; set; }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "y")]
         public int Y { get; set; }
 
         public Point(int posX, int posY)

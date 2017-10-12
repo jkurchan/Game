@@ -6,8 +6,8 @@ namespace Game
 {
     class Obstacle : IGameObject
     {
-        [JsonProperty]
-        public Point Pos;
+        [JsonProperty(PropertyName = "pos")]
+        public Point Pos { get; set; }
 
         public Obstacle(Point point)
         {

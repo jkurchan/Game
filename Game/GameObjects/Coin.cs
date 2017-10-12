@@ -6,11 +6,11 @@ namespace Game
 {
     class Coin : IGameObject
     {
-        [JsonProperty]
-        public Point Pos;
+        [JsonProperty(PropertyName = "pos")]
+        public Point Pos { get; set; }
 
-        [JsonProperty]
-        public int Points;
+        [JsonProperty(PropertyName = "points")]
+        public int Points { get; set; }
 
         public Coin(Point p, int points)
         {

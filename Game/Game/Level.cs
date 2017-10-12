@@ -2,29 +2,31 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Game.Game
 {
     class Level
     {
-        [JsonProperty]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "walls")]
         List<Wall> walls;
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "enemies")]
         List<Enemy> enemies;
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "coins")]
         List<Coin> coins;
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "player")]
         Player player;
 
-        [JsonProperty]
+        [JsonProperty(PropertyName = "finishes")]
         List<Finish> finishes;
 
+        [JsonProperty(PropertyName = "spawn")]
         public Point PlayerSpawn { get; }
 
         public Level(List<Wall> walls, List<Enemy> enemies, List<Coin> coins, Player player, List<Finish> finishes)
@@ -35,6 +37,12 @@ namespace Game.Game
             this.player = player;
             this.finishes = finishes;
             PlayerSpawn = new Point(player.Pos.X, player.Pos.Y);
+        }
+
+        public static Level Load(string filepath)
+        {
+            string json = File.ReadAllText(filepath);
+            return JsonConvert.DeserializeObject<Level>(json);
         }
 
         public void Paint()

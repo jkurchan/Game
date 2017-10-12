@@ -279,7 +279,7 @@ namespace Game
 
         private static int ItemStart_OnClick()
         {
-            gameLoop = new GameLoop();
+            gameLoop = new GameLoop("custom_maps/level1.mtglvl");
 
             int result = gameLoop.Start();
             if (result == 1) gameLoop = null;

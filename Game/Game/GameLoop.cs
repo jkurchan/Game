@@ -9,27 +9,24 @@ namespace Game
         public long Time { get; set; }
         public int Points { get; set; }
         public int Lives { get; set; }
-        public int CurrentLevel { get; set; }
         public bool Lost { get; set; }
         public bool Exit { get; set; }
-        public bool NextLevel { get; set; }
         public bool Resuming { get; set; }
 
         private Player player;
         private Level level;
 
-        public GameLoop()
+        public GameLoop(string filePath)
         {
             Time = 0;
             Points = 0;
             Lives = 2;
-            CurrentLevel = -1;
             Lost = false;
             Exit = false;
-            NextLevel = true;
             Resuming = false;
 
             player = new Player(new Point(0, 0));
+            level = Level.Load(filePath);
         }
 
         public int Start()
@@ -40,11 +37,6 @@ namespace Game
                 {
                     if (Lost) return 1;
                     if (Exit) return 2;
-                    if (NextLevel)
-                    {
-                        Lives++;
-                        CurrentLevel++;
-                    }
                 }
 
                 SetupGame();
@@ -61,7 +53,6 @@ namespace Game
 
             Lost = false;
             Exit = false;
-            NextLevel = false;
             Resuming = false;
 
             GuiUpdater.SetLevel(level.Name);
@@ -131,7 +122,6 @@ namespace Game
 
                 if(level.CheckFinishCollision(player.Pos))
                 {
-                    NextLevel = true;
                     break;
                 }
 
