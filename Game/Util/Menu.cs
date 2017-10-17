@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Util
 {
@@ -11,26 +8,22 @@ namespace Game.Util
         public List<MenuItem> Items;
         public int SelectedItem;
 
-        private int startingHeight;
+        private int posY;
+        private int horizontalOffset;
 
-        public Menu(int startingHeight)
+        public Menu(int posY, int horizontalOffset)
         {
             Items = new List<MenuItem>();
             SelectedItem = 0;
-            this.startingHeight = startingHeight;
+            this.posY = posY;
+            this.horizontalOffset = horizontalOffset;
         }
 
         public void AddItem(MenuItem item)
         {
-            int posY = startingHeight - Items.Count;
+            int posX = (Console.WindowWidth / 2) - (item.Text.Length / 2);
+            item.Pos = new Point(posX + horizontalOffset, posY + (Items.Count * 2));
             Items.Add(item);
-
-            foreach (MenuItem i in Items)
-            {
-                int posX = (Console.WindowWidth / 2) - (i.Text.Length / 2);
-                i.Pos = new Point(posX, posY);
-                posY += 2;
-            }
         }
 
         public void Paint()

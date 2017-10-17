@@ -12,27 +12,27 @@ namespace Game.Screens
 
         public int Show()
         {
-            menu = new Menu(20);
+            menu = new Menu(17, 0);
 
-            MenuItem itemStart = new MenuItem("Start new");
+            MenuItem itemStart = new MenuItem("Start new", ConsoleColor.White, GameSettings.MenuColor);
             itemStart.OnClick += ItemStart_OnClick;
 
-            MenuItem itemResume = new MenuItem("Resume previous");
+            MenuItem itemResume = new MenuItem("Resume previous", ConsoleColor.White, GameSettings.MenuColor);
             itemResume.OnClick += ItemResume_OnClick;
 
-            MenuItem itemCreate = new MenuItem("Level creator");
+            MenuItem itemCreate = new MenuItem("Level creator", ConsoleColor.White, GameSettings.MenuColor);
             itemCreate.OnClick += ItemCreate_OnClick;
 
-            MenuItem itemOptions = new MenuItem("Options");
-            itemOptions.OnClick += ItemOptions_OnClick;
+            MenuItem itemCustomLevels = new MenuItem("Custom levels", ConsoleColor.White, GameSettings.MenuColor);
+            itemCustomLevels.OnClick += ItemCustomLevels_OnClick;
 
-            MenuItem itemLeave = new MenuItem("Leave");
+            MenuItem itemLeave = new MenuItem("Leave", ConsoleColor.White, GameSettings.MenuColor);
             itemLeave.OnClick += ItemLeave_OnClick;
 
             menu.AddItem(itemStart);
             menu.AddItem(itemResume);
             menu.AddItem(itemCreate);
-            menu.AddItem(itemOptions);
+            menu.AddItem(itemCustomLevels);
             menu.AddItem(itemLeave);
 
             Paint();
@@ -68,26 +68,25 @@ namespace Game.Screens
         {
             while (true)
             {
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-                    switch (keyInfo.Key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            menu.SelectPrevious();
-                            break;
-                        case ConsoleKey.DownArrow:
-                            menu.SelectNext();
-                            break;
-                        case ConsoleKey.Enter:
-                            int result = menu.Click();
-                            if (result != -1)
-                                Paint();
-                            break;
-                        default:
-                            break;
-                    }
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        menu.SelectPrevious();
+                        break;
+                    case ConsoleKey.DownArrow:
+                        menu.SelectNext();
+                        break;
+                    case ConsoleKey.Enter:
+                        int result = menu.Click();
+                        if (result != -1)
+                            Paint();
+                        break;
+                    case ConsoleKey.Escape:
+                        return 1;
+                    default:
+                        break;
                 }
             }
         }
@@ -114,18 +113,15 @@ namespace Game.Screens
             return 0;
         }
 
-        private static int ItemOptions_OnClick()
+        private static int ItemCustomLevels_OnClick()
         {
             return -1;
         }
 
         private static int ItemStart_OnClick()
         {
-            gameScreen = new GameScreen("custom_maps/level1.mtglvl");
-
-            int result = gameScreen.Show();
-            if (result == 1) gameScreen = null;
-            return result;
+            CampaignLevelsScreen screen = new CampaignLevelsScreen();
+            return screen.Show();
         }
     }
 }

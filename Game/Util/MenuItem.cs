@@ -6,24 +6,28 @@ namespace Game.Util
     {
         public string Text { get; set; }
         public Point Pos { get; set; }
+        public ConsoleColor SelectedColor { get; set; }
+        public ConsoleColor UnselectedColor { get; set; }
         public delegate int ClickEventHandler();
         public event ClickEventHandler OnClick;
 
-        public MenuItem(string text)
+        public MenuItem(string text, ConsoleColor selected, ConsoleColor unselected)
         {
             Text = text;
+            SelectedColor = selected;
+            UnselectedColor = unselected;
         }
 
         public void Select()
         {
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = SelectedColor;
             Console.SetCursorPosition(Pos.X, Pos.Y);
             Console.Write(Text);
         }
 
         public void Deselect()
         {
-            Console.ForegroundColor = GameSettings.MenuColor;
+            Console.ForegroundColor = UnselectedColor;
             Console.SetCursorPosition(Pos.X, Pos.Y);
             Console.Write(Text);
         }

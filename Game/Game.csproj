@@ -67,6 +67,7 @@
     <Compile Include="GameObjects\TextTip.cs" />
     <Compile Include="Game\Application.cs" />
     <Compile Include="Game\Level.cs" />
+    <Compile Include="Screens\CampaignLevelsScreen.cs" />
     <Compile Include="Screens\LevelCreatorScreen.cs" />
     <Compile Include="Interfaces\IScreen.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
