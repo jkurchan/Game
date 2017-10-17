@@ -1,16 +1,14 @@
 ﻿using Game.Game;
-using Newtonsoft.Json;
 using System;
 
 namespace Game
 {
-    class Coin : IGameObject
+    public class Coin : IGameObject
     {
-        [JsonProperty(PropertyName = "pos")]
+        public long Points { get; set; }
         public Point Pos { get; set; }
 
-        [JsonProperty(PropertyName = "points")]
-        public int Points { get; set; }
+        public Coin() { }
 
         public Coin(Point p, int points)
         {

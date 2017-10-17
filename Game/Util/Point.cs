@@ -1,19 +1,16 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
-    class Point
+    public class Point
     {
-        [JsonProperty(PropertyName = "x")]
+        [JsonProperty("x")]
         public int X { get; set; }
 
-        [JsonProperty(PropertyName = "y")]
+        [JsonProperty("y")]
         public int Y { get; set; }
+
+        public Point() { }
 
         public Point(int posX, int posY)
         {

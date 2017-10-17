@@ -1,16 +1,15 @@
 ﻿using Game.GameObjects;
+using Game.Interfaces;
+using Game.Util;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Game.Game
 {
-    class LevelCreator
+    class LevelCreatorScreen : IScreen
     {
         private enum GameObject { Wall, EnemyHorizontal, EnemyVertical, Coin, Player, Finish }
 
@@ -28,7 +27,7 @@ namespace Game.Game
         private ConsoleColor selectedItemColor;
         volatile private int warningDisplayTime;
 
-        public LevelCreator()
+        public LevelCreatorScreen()
         {
             boundaries = new List<Wall>();
             walls = new List<Wall>();
@@ -44,7 +43,7 @@ namespace Game.Game
             warningDisplayTime = 2000;
         }
 
-        public void Start()
+        public int Show()
         {
             GuiUpdater.ClearScreen();
             SetBoundaries();
@@ -118,9 +117,30 @@ namespace Game.Game
                         SaveLevel();
                         break;
                     case ConsoleKey.Escape:
-                        return;
+                        return 1;
                 }
             }
+        }
+
+        public void Paint()
+        {
+            GuiUpdater.ClearScreen();
+            SetBoundaries();
+            ShowToolbar();
+
+            foreach (Wall w in boundaries)
+                w.Paint();
+            foreach (Wall w in walls)
+                w.Paint();
+            foreach (Enemy e in enemies)
+                e.Paint();
+            foreach (Coin c in coins)
+                c.Paint();
+            foreach (Finish f in finishes)
+                f.Paint();
+            player.Paint();
+
+            MoveCursor(new Point(0, 0));
         }
 
         private void PlaceObject()
@@ -445,7 +465,7 @@ namespace Game.Game
             }
         }
 
-        private void TextLevel()
+        private void TestLevel()
         {
             if (player == null)
             {
@@ -453,8 +473,20 @@ namespace Game.Game
                 return;
             }
 
+            foreach (Wall w in boundaries)
+                walls.Add(w);
             Level level = new Level(walls, enemies, coins, player, finishes);
-            string json = JsonConvert.SerializeObject(level);
+            string xml = XmlConvert.Serialize(level);
+
+            Directory.CreateDirectory("temp");
+            File.WriteAllText("temp/level_creator_test_level.mtglvl", xml);
+
+            walls.RemoveRange(walls.Count - 5, 4);
+
+            GameScreen gameLoop = new GameScreen("temp/level_creator_test_level.mtglvl");
+            gameLoop.Show();
+            Paint();
+            File.Delete("temp/level_creator_test_level.mtglvl");
         }
 
         private void SaveLevel()
@@ -473,15 +505,16 @@ namespace Game.Game
             Console.ForegroundColor = ConsoleColor.White;
             string filename = Console.ReadLine();
 
-            //foreach (Wall w in boundaries)
-                //walls.Add(w);
+            foreach (Wall w in boundaries)
+                walls.Add(w);
             Level level = new Level(walls, enemies, coins, player, finishes);
-            string json = JsonConvert.SerializeObject(level);
+            level.Name = "test";
+            string xml = XmlConvert.Serialize(level);
 
             Directory.CreateDirectory("custom_maps");
-            File.WriteAllText("custom_maps/" + filename + ".mtglvl", json);
+            File.WriteAllText("custom_maps/" + filename + ".mtglvl", xml);
 
-            //walls.RemoveRange(walls.Count - 5, 4);
+            walls.RemoveRange(walls.Count - 5, 4);
             DisplayWarning("Map saved successfully!", 1000);
         }
     }

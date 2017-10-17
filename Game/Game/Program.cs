@@ -1,10 +1,5 @@
-﻿using Game.Game;
+﻿using Game.Screens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -17,7 +12,9 @@ namespace Game
 
             GuiUpdater.ShowCompanyNameScreen();
             GuiUpdater.ShowTitleScreen();
-            GuiUpdater.ShowMainMenu();
+
+            MainMenuScreen menu = new MainMenuScreen();
+            menu.Show();
         }
     }
 }

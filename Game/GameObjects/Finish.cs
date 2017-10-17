@@ -1,13 +1,13 @@
 ﻿using Game.Game;
-using Newtonsoft.Json;
 using System;
 
 namespace Game.GameObjects
 {
-    class Finish : IGameObject
+    public class Finish : IGameObject
     {
-        [JsonProperty(PropertyName = "pos")]
         public Point Pos { get; set; }
+
+        public Finish() { }
 
         public Finish(Point p)
         {

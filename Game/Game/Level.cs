@@ -1,48 +1,37 @@
 ﻿using Game.GameObjects;
-using Newtonsoft.Json;
+using Game.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Game.Game
 {
-    class Level
+    public class Level
     {
-        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+        public List<Enemy> Enemies { get; set; }
+        public List<Coin> Coins { get; set; }
+        public List<Finish> Finishes { get; set; }
+        public Point Spawn { get; set; }
+        public Player Player { get; set; }
+        public List<Wall> Walls { get; set; }
 
-        [JsonProperty(PropertyName = "walls")]
-        List<Wall> walls;
-
-        [JsonProperty(PropertyName = "enemies")]
-        List<Enemy> enemies;
-
-        [JsonProperty(PropertyName = "coins")]
-        List<Coin> coins;
-
-        [JsonProperty(PropertyName = "player")]
-        Player player;
-
-        [JsonProperty(PropertyName = "finishes")]
-        List<Finish> finishes;
-
-        [JsonProperty(PropertyName = "spawn")]
-        public Point PlayerSpawn { get; }
+        public Level() { }
 
         public Level(List<Wall> walls, List<Enemy> enemies, List<Coin> coins, Player player, List<Finish> finishes)
         {
-            this.walls = walls;
-            this.enemies = enemies;
-            this.coins = coins;
-            this.player = player;
-            this.finishes = finishes;
-            PlayerSpawn = new Point(player.Pos.X, player.Pos.Y);
+            Walls = walls;
+            Enemies = enemies;
+            Coins = coins;
+            Player = player;
+            Finishes = finishes;
+            Spawn = new Point(player.Pos.X, player.Pos.Y);
         }
 
         public static Level Load(string filepath)
         {
             string json = File.ReadAllText(filepath);
-            return JsonConvert.DeserializeObject<Level>(json);
+            return (Level) XmlConvert.Deserialize(json, typeof(Level));
         }
 
         public void Paint()
@@ -66,82 +55,82 @@ namespace Game.Game
 
         public void PaintWalls()
         {
-            foreach (Wall w in walls)
+            foreach (Wall w in Walls)
                 w.Paint();
         }
 
         public void PaintEnemies()
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in Enemies)
                 e.Paint();
         }
 
         public void PaintCoins()
         {
-            foreach (Coin c in coins)
+            foreach (Coin c in Coins)
                 c.Paint();
         }
 
         public void PaintFinish()
         {
-            foreach (Finish f in finishes)
+            foreach (Finish f in Finishes)
                 f.Paint();
         }
 
         public void RemoveWalls()
         {
-            foreach (Wall w in walls)
+            foreach (Wall w in Walls)
                 w.Remove();
-            walls.Clear();
+            Walls.Clear();
         }
 
         public void RemoveEnemies()
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in Enemies)
                 e.Remove();
-            enemies.Clear();
+            Enemies.Clear();
         }
 
         public void RemoveCoins()
         {
-            foreach (Coin c in coins)
+            foreach (Coin c in Coins)
                 c.Remove();
-            coins.Clear();
+            Coins.Clear();
         }
 
         public void RemoveFinishes()
         {
-            foreach (Finish f in finishes)
+            foreach (Finish f in Finishes)
                 f.Remove();
-            finishes.Clear();
+            Finishes.Clear();
         }
 
         public void MoveEnemies(long time)
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in Enemies)
                 e.Move(null, this, time);
         }
 
         public bool CheckWallCollision(Point p)
         {
-            foreach (Wall w in walls)
+            foreach (Wall w in Walls)
                 if (w.IsOccupying(p)) return true;
             return false;
         }
 
         public bool CheckEnemyCollision(Point p)
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in Enemies)
                 if (e.IsOccupying(p)) return true;
             return false;
         }
 
         public bool CheckCoinCollision(Point p)
         {
-            foreach (Coin c in coins)
+            foreach (Coin c in Coins)
                 if (c.IsOccupying(p))
                 {
-                    coins.Remove(c);
+                    Coins.Remove(c);
                     return true;
                 }
 
@@ -150,7 +139,7 @@ namespace Game.Game
 
         public bool CheckFinishCollision(Point p)
         {
-            foreach (Finish f in finishes)
+            foreach (Finish f in Finishes)
                 if (f.IsOccupying(p)) return true;
             return false;
         }

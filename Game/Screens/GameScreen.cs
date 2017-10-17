@@ -1,10 +1,11 @@
 ﻿using Game.Game;
+using Game.Interfaces;
 using System;
 using System.Threading;
 
 namespace Game
 {
-    class GameLoop
+    class GameScreen : IScreen
     {
         public long Time { get; set; }
         public int Points { get; set; }
@@ -16,7 +17,7 @@ namespace Game
         private Player player;
         private Level level;
 
-        public GameLoop(string filePath)
+        public GameScreen(string filePath)
         {
             Time = 0;
             Points = 0;
@@ -29,7 +30,7 @@ namespace Game
             level = Level.Load(filePath);
         }
 
-        public int Start()
+        public int Show()
         {
             while (true)
             {
@@ -44,10 +45,15 @@ namespace Game
             }
         }
 
+        public void Paint()
+        {
+
+        }
+
         private void SetupGame()
         {
             if (!Resuming)
-                player.MoveToPosition(level.PlayerSpawn, level);
+                player.MoveToPosition(level.Spawn, level);
             level.Paint();
             player.Paint();
 
@@ -111,7 +117,7 @@ namespace Game
                         return;
                     }
                     
-                    player.MoveToPosition(level.PlayerSpawn, level);
+                    player.MoveToPosition(level.Spawn, level);
                     GuiUpdater.SetLevel(level.Name);
                     GuiUpdater.SetLives(Lives);
                     GuiUpdater.SetPoints(Points);

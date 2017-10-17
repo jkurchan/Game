@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.GameObjects
 {
@@ -16,6 +12,8 @@ namespace Game.GameObjects
         public int ArrowPos { get; set; }
         public int ArrowSide { get; set; }
         public bool ShowArrow { get; set; }
+
+        public TextTip() { }
 
         public TextTip(string text, Point p, int arrowPos, int arrowSide, bool showArrow)
         {

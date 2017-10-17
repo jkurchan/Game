@@ -4,10 +4,11 @@ using System;
 
 namespace Game
 {
-    class Obstacle : IGameObject
+    public class Obstacle : IGameObject
     {
-        [JsonProperty(PropertyName = "pos")]
         public Point Pos { get; set; }
+
+        public Obstacle() { }
 
         public Obstacle(Point point)
         {

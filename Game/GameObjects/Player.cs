@@ -4,13 +4,12 @@ using System;
 
 namespace Game
 {
-    class Player : IGameObject
+    public class Player : IGameObject
     {
-        [JsonProperty(PropertyName = "pos")]
+        public Point OldPos { get; set; }
         public Point Pos { get; set; }
 
-        [JsonProperty(PropertyName = "oldPos")]
-        public Point OldPos { get; set; }
+        public Player() { }
 
         public Player(Point p)
         {

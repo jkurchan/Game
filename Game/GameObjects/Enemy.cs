@@ -4,25 +4,18 @@ using System;
 
 namespace Game
 {
-    class Enemy : IGameObject
+    public class Enemy : IGameObject
     {
         public const int FacingHorizontal = 1;
         public const int FacingVertical = 2;
-
-        [JsonProperty(PropertyName = "pos")]
+        
+        public long Facing { get; set; }
+        public Point OldPos { get; set; }
+        public long Cooldown { get; set; }
+        public Point MovingPoint { get; set; }
         public Point Pos { get; set; }
 
-        [JsonProperty(PropertyName = "cooldown")]
-        public int Cooldown { get; set; }
-
-        [JsonProperty(PropertyName = "oldPos")]
-        public Point OldPos { get; set; }
-
-        [JsonProperty(PropertyName = "facing")]
-        public int Facing { get; set; }
-
-        [JsonProperty(PropertyName = "movingPoint")]
-        public Point MovingPoint { get; set; }
+        public Enemy() { }
 
         public Enemy(Point p, int facing)
         {

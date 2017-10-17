@@ -67,19 +67,21 @@
     <Compile Include="GameObjects\TextTip.cs" />
     <Compile Include="Game\Application.cs" />
     <Compile Include="Game\Level.cs" />
-    <Compile Include="Game\LevelCreator.cs" />
+    <Compile Include="Screens\LevelCreatorScreen.cs" />
+    <Compile Include="Interfaces\IScreen.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Util\GuiUpdater.cs" />
-    <Compile Include="GameObjects\IGameObject.cs" />
+    <Compile Include="Interfaces\IGameObject.cs" />
     <Compile Include="GameObjects\Obstacle.cs" />
     <Compile Include="Util\Menu.cs" />
     <Compile Include="Util\MenuItem.cs" />
     <Compile Include="Util\Point.cs" />
-    <Compile Include="Game\GameLoop.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Game\GameRule.cs" />
     <Compile Include="Game\GameSettings.cs" />
     <Compile Include="Game\GameState.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Game\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Wall.cs" />
+    <Compile Include="Util\XmlConvert.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

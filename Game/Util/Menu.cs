@@ -33,7 +33,7 @@ namespace Game.Util
             }
         }
 
-        public void Show()
+        public void Paint()
         {
             for(int i = 0; i < Items.Count; i++)
             {

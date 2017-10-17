@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Game.Game
+namespace Game.Interfaces
 {
-    static class Application
+    interface IScreen
     {
-        public static string Version = "0.0.2 Alpha";
+        int Show();
+        void Paint();
     }
 }

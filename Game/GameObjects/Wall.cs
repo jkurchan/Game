@@ -1,13 +1,13 @@
 ﻿using Game.Game;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace Game
 {
-    class Wall : IGameObject
+    public class Wall : IGameObject
     {
-        [JsonProperty(PropertyName = "obstacles")]
         public List<Obstacle> Obstacles { get; set; }
+
+        public Wall() { }
 
         public Wall(Point sp, Point ep)
         {
