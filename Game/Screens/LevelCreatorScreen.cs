@@ -483,8 +483,9 @@ namespace Game.Game
 
             walls.RemoveRange(walls.Count - 5, 4);
 
-            GameScreen gameLoop = new GameScreen("temp/level_creator_test_level.mtglvl");
-            gameLoop.Show();
+            GameScreen game = new GameScreen("temp/level_creator_test_level.mtglvl");
+            game.Lives = 999;
+            game.Show();
             Paint();
             File.Delete("temp/level_creator_test_level.mtglvl");
         }

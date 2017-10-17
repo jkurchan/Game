@@ -43,6 +43,8 @@ namespace Game
                 text = "Lives: " + lives;
             Console.SetCursorPosition(109, 3);
             Console.ForegroundColor = GameSettings.ObstacleColor;
+            Console.Write("          ");
+            Console.SetCursorPosition(109, 3);
             Console.Write(text);
         }
 

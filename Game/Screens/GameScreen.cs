@@ -24,7 +24,7 @@ namespace Game
         {
             Time = 0;
             Points = 0;
-            Lives = 2;
+            Lives = 3;
             Resuming = false;
 
             player = new Player(new Point(0, 0));
