@@ -7,11 +7,14 @@ namespace Game
 {
     class GameScreen : IScreen
     {
+        public static readonly int CODE_EXIT = 1;
+        public static readonly int CODE_PAUSE = 2;
+        public static readonly int CODE_WON = 3;
+        public static readonly int CODE_LOST = 4;
+
         public long Time { get; set; }
         public int Points { get; set; }
         public int Lives { get; set; }
-        public bool Lost { get; set; }
-        public bool Exit { get; set; }
         public bool Resuming { get; set; }
 
         private Player player;
@@ -22,8 +25,6 @@ namespace Game
             Time = 0;
             Points = 0;
             Lives = 2;
-            Lost = false;
-            Exit = false;
             Resuming = false;
 
             player = new Player(new Point(0, 0));
@@ -32,34 +33,14 @@ namespace Game
 
         public int Show()
         {
-            while (true)
-            {
-                if (!Resuming)
-                {
-                    if (Lost) return 1;
-                    if (Exit) return 2;
-                }
-
-                SetupGame();
-                StartPlaying();
-            }
+            SetupGame();
+            return StartPlaying();
         }
 
         public void Paint()
         {
-
-        }
-
-        private void SetupGame()
-        {
-            if (!Resuming)
-                player.MoveToPosition(level.Spawn, level);
             level.Paint();
             player.Paint();
-
-            Lost = false;
-            Exit = false;
-            Resuming = false;
 
             GuiUpdater.SetLevel(level.Name);
             GuiUpdater.SetPoints(Points);
@@ -67,7 +48,13 @@ namespace Game
             GuiUpdater.ShowTopStrip();
         }
 
-        private void StartPlaying()
+        private void SetupGame()
+        {
+            player.MoveToPosition(level.Spawn, level);
+            Paint();
+        }
+
+        private int StartPlaying()
         {
             ConsoleKeyInfo keyInfo;
 
@@ -91,8 +78,7 @@ namespace Game
                             player.Move(new Point(1, 0), level, Time);
                             break;
                         case ConsoleKey.Escape:
-                            Exit = true;
-                            return;
+                            return CODE_PAUSE;
                         default:
                             break;
                     }
@@ -111,11 +97,7 @@ namespace Game
                     Lives--;
                     Time = 0;
 
-                    if (Lives < 1)
-                    {
-                        Lost = true;
-                        return;
-                    }
+                    if (Lives < 1) return CODE_LOST;
                     
                     player.MoveToPosition(level.Spawn, level);
                     GuiUpdater.SetLevel(level.Name);
@@ -126,10 +108,7 @@ namespace Game
                     continue;
                 }
 
-                if(level.CheckFinishCollision(player.Pos))
-                {
-                    break;
-                }
+                if (level.CheckFinishCollision(player.Pos)) return CODE_WON;
 
                 Time++;
                 Thread.Sleep(16);
